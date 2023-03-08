@@ -1,0 +1,36 @@
+name: Checks before merge
+
+on:
+  pull_request:
+    branches:
+      - master
+      - development
+
+jobs:
+  hardhat-test:
+    name: hardhat test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: actions/checkout@v3
+      - name: Install Dependecies
+        run: npm install
+      - name: Run tests
+        run: npm run test
+
+  linter-check:
+    name: linters Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: actions/checkout@v3
+      - name: Install Dependecies
+        run: npm install
+      - name: Run solhint
+        run: npm run solhint
+      - name: Run eslint
+        run: npm run eslint
